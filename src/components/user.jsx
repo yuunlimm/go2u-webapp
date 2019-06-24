@@ -1,12 +1,31 @@
 import React, { Component } from "react";
 import { getUsers } from "../userService";
+import { paginate } from "../utils/pagination";
+import Pagination from "./common/page";
 
 class User extends Component {
   state = {
-    users: getUsers()
+    users: getUsers(),
+    pageSize: 5,
+    currentPage: 1
+  };
+
+  handleDelete = user => {
+    const users = this.state.users.filter(u => u._id !== user._id);
+    this.setState({ users });
+  };
+
+  handlePageChange = page => {
+    this.setState({ currentPage: page });
   };
 
   render() {
+    const { length: count } = this.state.users;
+    const { users: allUsers, pageSize, currentPage } = this.state;
+
+    const users = paginate(allUsers, currentPage, pageSize);
+
+    if (count === 0) return <p>There are no users in the database.</p>;
     return (
       <React.Fragment>
         <span> Users</span>
@@ -21,7 +40,7 @@ class User extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.users.map(user => (
+            {users.map(user => (
               <tr key={user._id}>
                 <th>{user.firstName}</th>
                 <th>{user.lastName}</th>
@@ -39,6 +58,12 @@ class User extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination
+          userCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={this.handlePageChange}
+        />
       </React.Fragment>
     );
   }
