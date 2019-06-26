@@ -5,64 +5,91 @@ const users = [
     _id: "5b21ca3eeb7f6fbccd471815",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd471816",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd471817",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd471819",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd47181a",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd47181b",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd47181e",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd47181f",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+    mobile: "0102301",
+    isGoer: "true"
   },
   {
     _id: "5b21ca3eeb7f6fbccd471821",
     lastName: "lim",
     firstName: "Yuun",
+    userType: { _id: "5b21ca3eeb7f6fbccd471814" },
+
     email: "abcde@google.com",
-    mobile: "0102301"
+
+    mobile: "0102301",
+    isGoer: "true"
   }
 ];
 

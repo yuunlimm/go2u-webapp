@@ -2,12 +2,27 @@ import React, { Component } from "react";
 import { getUsers } from "../userService";
 import { paginate } from "../utils/pagination";
 import Pagination from "./common/page";
+import UserTable from "./usersTable";
+import ListGroup from "./common/listGroup";
+import { getUserTypes } from "../userTypeService";
+import _ from "lodash";
 
 class User extends Component {
   state = {
-    users: getUsers(),
+    users: [],
+    types: [],
     pageSize: 5,
-    currentPage: 1
+    currentPage: 1,
+    selectedType: "User",
+    sortColumn: { path: "Last Name", order: "asc" }
+  };
+
+  componentDidMount() {
+    const types = [{ _id: "", type: "All Users" }, ...getUserTypes()];
+    this.setState({ users: getUsers(), types });
+  }
+  handleTypeChange = type => {
+    this.setState({ selectedType: type, currentPage: 1 });
   };
 
   handleDelete = user => {
@@ -19,52 +34,60 @@ class User extends Component {
     this.setState({ currentPage: page });
   };
 
+  handleSort = sortColumn => {
+    this.setState({ sortColumn });
+  };
+
+  getPagedData = () => {
+    const {
+      users: allUsers,
+      pageSize,
+      currentPage,
+      selectedType,
+      sortColumn
+    } = this.state;
+    const filtered =
+      selectedType && selectedType._id
+        ? allUsers.filter(user => user.userType._id === selectedType._id)
+        : allUsers;
+
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const users = paginate(sorted, currentPage, pageSize);
+    return { totalCount: filtered.length, data: users };
+  };
   render() {
     const { length: count } = this.state.users;
-    const { users: allUsers, pageSize, currentPage } = this.state;
-
-    const users = paginate(allUsers, currentPage, pageSize);
+    console.log(count);
+    const { pageSize, currentPage, sortColumn } = this.state;
 
     if (count === 0) return <p>There are no users in the database.</p>;
+
+    const { totalCount, data } = this.getPagedData();
+
     return (
-      <React.Fragment>
-        <span> Users</span>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">email</th>
-              <th scope="col">phone number</th>
-              <th scope="col"> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <tr key={user._id}>
-                <th>{user.firstName}</th>
-                <th>{user.lastName}</th>
-                <th>{user.email}</th>
-                <th>{user.mobile}</th>
-                <td>
-                  <button
-                    onClick={() => this.handleDelete(user)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <Pagination
-          userCount={count}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
-      </React.Fragment>
+      <div className="row">
+        <div className="col-3">
+          <ListGroup
+            userType={this.state.types}
+            selectedType={this.state.selectedType}
+            onItemSelected={this.handleTypeChange}
+          />
+        </div>
+        <div className="col">
+          <UserTable
+            onSort={this.handSort}
+            sortColumn={sortColumn}
+            users={data}
+            onDelete={this.handleDelete}
+          />
+          <Pagination
+            userCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+      </div>
     );
   }
 }
