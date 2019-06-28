@@ -6,6 +6,7 @@ import NavBar from "./components/navbar";
 import User from "./components/user";
 import NotFound from "./components/notFound";
 import About from "./components/about";
+import LoginForm from "./components/loginForm";
 import "./App.css";
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
         <NavBar />
         <main className="container">
           <Switch>
+            <Route path="/login" component={LoginForm} />
             <Route path="/about" component={About} />
             <Route path="/users/:id" component={UserForm} />
             <Route path="/users" component={User} />
