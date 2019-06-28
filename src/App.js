@@ -8,6 +8,7 @@ import NotFound from "./components/notFound";
 import About from "./components/about";
 import LoginForm from "./components/loginForm";
 import "./App.css";
+import RegisterForm from "./components/registerForm";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
         <NavBar />
         <main className="container">
           <Switch>
+            <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/about" component={About} />
             <Route path="/users/:id" component={UserForm} />

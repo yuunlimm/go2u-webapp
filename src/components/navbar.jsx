@@ -20,17 +20,20 @@ const NavBar = () => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <div className="navbar-nav">
-          <NavLink className="nav-link" to="/about">
+          <NavLink className="nav-item nav-link" to="/about">
             About
           </NavLink>
-          <NavLink className="nav-link" to="/users">
+          <NavLink className="nav-item nav-link" to="/users">
             Users
           </NavLink>
-          <NavLink className="nav-link" to="/reviews">
+          <NavLink className="nav-item nav-link" to="/reviews">
             Reviews
           </NavLink>
-          <NavLink className="nav-link" to="/login">
+          <NavLink className="nav-item nav-link" to="/login">
             Login
+          </NavLink>
+          <NavLink className="nav-item nav-link" to="/register">
+            Register
           </NavLink>
         </div>
       </div>

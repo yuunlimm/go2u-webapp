@@ -5,6 +5,7 @@ import Pagination from "./common/page";
 import UserTable from "./usersTable";
 import ListGroup from "./common/listGroup";
 import { getUserTypes } from "../userTypeService";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class User extends Component {
@@ -73,6 +74,11 @@ class User extends Component {
             onItemSelected={this.handleTypeChange}
           />
         </div>
+        <Link to="/register" className="btn btn-primary" style={{ margin: 20 }}>
+          New User
+        </Link>
+        <p>Showing {totalCount} users in the database.</p>
+
         <div className="col">
           <UserTable
             onSort={this.handSort}
