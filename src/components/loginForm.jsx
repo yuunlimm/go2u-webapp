@@ -22,7 +22,7 @@ class LoginForm extends Form {
   };
 
   render() {
-    const { data, errors } = this.state;
+    // const { data, errors } = this.state;
     return (
       <div>
         <h1>Login</h1>

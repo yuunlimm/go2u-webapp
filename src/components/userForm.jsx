@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "./common/form";
-import { getUser, saveUser } from "../userService";
+import { getUser, saveUser } from "../services/userService";
 import Joi from "joi-browser";
-import { getUserTypes } from "../userTypeService";
+import { getUserTypes } from "../services/userTypeService";
 
 class UserForm extends Form {
   state = {

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { getUsers } from "../userService";
+import { getUsers } from "../services/userService";
 import { paginate } from "../utils/pagination";
 import Pagination from "./common/page";
 import UserTable from "./usersTable";
 import ListGroup from "./common/listGroup";
-import { getUserTypes } from "../userTypeService";
+import { getUserTypes } from "../services/userTypeService";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+import SearchBox from "./common/searchBox";
 
 class User extends Component {
   state = {
@@ -15,12 +16,14 @@ class User extends Component {
     pageSize: 5,
     currentPage: 1,
     selectedType: "User",
+    searchQuery: null,
     sortColumn: { path: "Last Name", order: "asc" }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { data: users } = await getUsers();
     const types = [{ _id: "", type: "All Users" }, ...getUserTypes()];
-    this.setState({ users: getUsers(), types });
+    this.setState({ users, types });
   }
   handleTypeChange = type => {
     this.setState({ selectedType: type, currentPage: 1 });
@@ -29,6 +32,13 @@ class User extends Component {
   handleDelete = user => {
     const users = this.state.users.filter(u => u._id !== user._id);
     this.setState({ users });
+  };
+
+  handleUsertypeSelect = userType => {
+    this.setState({ selectedType: userType, currentPage: 1, searchQuery: "" });
+  };
+  handleSearch = query => {
+    this.setState({ searchQuery: query, currentPage: 1, selectedType: "" });
   };
 
   handlePageChange = page => {
@@ -45,12 +55,19 @@ class User extends Component {
       pageSize,
       currentPage,
       selectedType,
-      sortColumn
+      sortColumn,
+      searchQuery
     } = this.state;
-    const filtered =
-      selectedType && selectedType._id
-        ? allUsers.filter(user => user.userType._id === selectedType._id)
-        : allUsers;
+
+    let filtered = allUsers;
+    if (searchQuery)
+      filtered = allUsers.filter(u =>
+        u.lastName.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else if (selectedType && selectedType._id)
+      filtered = allUsers.filter(
+        user => user.userType._id === selectedType._id
+      );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
     const users = paginate(sorted, currentPage, pageSize);
@@ -63,7 +80,7 @@ class User extends Component {
 
     if (count === 0) return <p>There are no users in the database.</p>;
 
-    const { totalCount, data } = this.getPagedData();
+    const { totalCount, data, searchQuery } = this.getPagedData();
 
     return (
       <div className="row">
@@ -74,12 +91,17 @@ class User extends Component {
             onItemSelected={this.handleTypeChange}
           />
         </div>
-        <Link to="/register" className="btn btn-primary" style={{ margin: 20 }}>
-          New User
-        </Link>
-        <p>Showing {totalCount} users in the database.</p>
 
         <div className="col">
+          <Link
+            to="/register"
+            className="btn btn-primary"
+            style={{ margin: 20 }}
+          >
+            New User
+          </Link>
+          <p>Showing {totalCount} users in the database.</p>
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <UserTable
             onSort={this.handSort}
             sortColumn={sortColumn}
