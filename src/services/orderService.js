@@ -1,20 +1,21 @@
 import http from "./httpService";
 import { apiUrl } from "../config.json";
 
-const apiEndpoint = apiUrl + "/user";
+const apiEndpoint = apiUrl + "/order";
 
 function userUrl(id) {
   return `${apiEndpoint}/${id}`;
 }
-export function getUsers() {
+
+export function getOrders() {
   return http.get(apiEndpoint);
 }
 
-export function getUser(id) {
+export function getOrder(id) {
   return http.get(userUrl(id));
 }
 
-export function saveUser(user) {
+export function saveOrder(user) {
   if (user._id) {
     const body = { ...user };
     delete user._id;
@@ -24,6 +25,6 @@ export function saveUser(user) {
   return http.post(apiEndpoint, user);
 }
 
-export function deleteUser(id) {
+export function deleteOrder(id) {
   return http.delete(userUrl(id));
 }

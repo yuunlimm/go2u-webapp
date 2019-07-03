@@ -7,11 +7,13 @@ class UserTable extends Component {
     {
       path: "firstName",
       label: "First Name",
-      content: user => <Link to={`/users/${user._id}`}>{user.firstName}</Link>
+      content: user => (
+        <Link to={`/users/${user._id}`}>{user.name.firstName}</Link>
+      )
     },
-    { path: "lastName", label: "Last Name" },
+    { path: "name.lastName", label: "Last Name" },
     { path: "email", label: "Email" },
-    { path: "mobile", label: "Phone Number" },
+    { path: "phone.number", label: "Phone Number" },
     { path: "isGoer", label: "Goer" },
     {
       key: "delete",

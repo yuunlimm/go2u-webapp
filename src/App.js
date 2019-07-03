@@ -11,6 +11,8 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import OrderForm from "./components/orderForm";
+import Order from "./order";
 
 class App extends Component {
   render() {
@@ -20,6 +22,8 @@ class App extends Component {
         <NavBar />
         <main className="container">
           <Switch>
+            <Route path="/orders" component={Order} />
+            <Route path="/orders/:id" component={OrderForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/about" component={About} />
