@@ -27,3 +27,12 @@ export function saveUser(user) {
 export function deleteUser(id) {
   return http.delete(userUrl(id));
 }
+
+export function register(user) {
+  return http.post(apiEndpoint, {
+    password: user.password,
+    name: { firstName: user.firstName, lastName: user.lastName },
+    email: user.email,
+    phone: { number: user.mobile }
+  });
+}

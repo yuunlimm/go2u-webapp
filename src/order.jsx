@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import OrderTable from "./components/orderTable";
 import _ from "lodash";
+import Pagination from "./components/common/page";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { getOrders, getOrder, deleteOrder } from "./services/orderService";
 import { paginate } from "./utils/pagination";
 
@@ -80,11 +82,25 @@ class Order extends Component {
       <div className="row">
         <div className="col-3" />
         <div className="col">
+          <Link
+            to="/neworder"
+            className="btn btn-primary"
+            style={{ margin: 20 }}
+          >
+            New Order
+          </Link>
+          <p>Showing {totalCount} orders in the database.</p>
           <OrderTable
             onSort={this.handleSort}
             sortColumn={sortColumn}
             orders={data}
             onDelete={this.handleDelete}
+          />
+          <Pagination
+            userCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
           />
         </div>
       </div>

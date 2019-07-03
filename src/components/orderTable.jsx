@@ -24,14 +24,13 @@ class OrderTable extends Component {
   ];
 
   render() {
-    const { onDelete, onSort, sortColumn, orders } = this.props;
+    const { onSort, sortColumn, orders } = this.props;
     return (
       <Table
         columns={this.column}
         sortColumn={sortColumn}
         data={orders}
         onSort={onSort}
-        onDelete={onDelete}
       />
     );
   }

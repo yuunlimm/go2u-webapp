@@ -1,9 +1,9 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { saveUser, register } from "../services/userService";
+import { saveUser } from "../services/userService";
 
-class RegisterForm extends Form {
+class NeworderForm extends Form {
   state = {
     data: {
       username: "",
@@ -37,28 +37,20 @@ class RegisterForm extends Form {
     email: Joi.string()
       .required()
       .label("Email Address"),
-    mobile: Joi.string()
+    mobile: Joi.number()
       .required()
+      .min(0)
+      .max(10000000)
       .label("Phone Number"),
     isGoer: Joi.boolean()
       .required()
       .label("Goer")
   };
 
-  doSubmit = async () => {
-    try {
-      const response = await register(this.state.data);
-      console.log(response);
-      localStorage.setItem("token", response.headers["x-auth-token"]);
-      // this.props.history.push("users");
-      window.localStorage = "/";
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        this.setState({ errors });
-      }
-    }
+  doSubmit = () => {
+    const a = saveUser(this.state.data);
+    console.log(a);
+    this.props.history.push("/users");
   };
 
   render() {
@@ -81,4 +73,4 @@ class RegisterForm extends Form {
   }
 }
 
-export default RegisterForm;
+export default NeworderForm;
