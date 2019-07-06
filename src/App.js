@@ -16,6 +16,7 @@ import Logout from "./components/logout";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import auth from "./services/authService";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
   state = {};
@@ -26,10 +27,12 @@ class App extends Component {
   }
 
   render() {
+    const { user } = this.state;
+
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={this.state.user} />
+        <NavBar user={user} />
         <main className="container">
           <Switch>
             <Route path="/neworder" component={NeworderForm} />
@@ -39,8 +42,11 @@ class App extends Component {
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
             <Route path="/about" component={About} />
-            <Route path="/users/:id" component={UserForm} />
-            <Route path="/users" component={User} />
+            <ProtectedRoute path="/users/:id" component={UserForm} />
+            <Route
+              path="/users"
+              render={props => <User {...props} user={this.state.user} />}
+            />
             <Route path="/reviews" component={Reviews} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/about" />

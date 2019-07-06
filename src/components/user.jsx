@@ -95,6 +95,7 @@ class User extends Component {
   render() {
     const { length: count } = this.state.users;
     const { pageSize, currentPage, sortColumn } = this.state;
+    const { user: currentUser } = this.props;
 
     if (count === 0) return <p>There are no users in the database.</p>;
 
@@ -111,13 +112,15 @@ class User extends Component {
         </div>
 
         <div className="col">
-          <Link
-            to="/register"
-            className="btn btn-primary"
-            style={{ margin: 20 }}
-          >
-            New User
-          </Link>
+          {currentUser && (
+            <Link
+              to="/register"
+              className="btn btn-primary"
+              style={{ margin: 20 }}
+            >
+              New User
+            </Link>
+          )}
           <p>Showing {totalCount} users in the database.</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <UserTable
