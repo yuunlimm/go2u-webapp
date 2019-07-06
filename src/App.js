@@ -12,20 +12,19 @@ import RegisterForm from "./components/registerForm";
 import OrderForm from "./components/orderForm";
 import Order from "./order";
 import NeworderForm from "./components/neworderForm";
-import jwtDecode from "jwt-decode";
+import Logout from "./components/logout";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import auth from "./services/authService";
 
 class App extends Component {
-  state = { user: "" };
+  state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (ex) {}
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
+
   render() {
     return (
       <React.Fragment>
@@ -38,6 +37,7 @@ class App extends Component {
             <Route path="/orders/:id" component={OrderForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
+            <Route path="/logout" component={Logout} />
             <Route path="/about" component={About} />
             <Route path="/users/:id" component={UserForm} />
             <Route path="/users" component={User} />

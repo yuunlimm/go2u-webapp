@@ -4,7 +4,7 @@ import _ from "lodash";
 import Pagination from "./components/common/page";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { getOrders, getOrder, deleteOrder } from "./services/orderService";
+import { getOrders, deleteOrder } from "./services/orderService";
 import { paginate } from "./utils/pagination";
 
 class Order extends Component {

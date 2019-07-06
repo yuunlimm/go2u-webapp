@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import Order from "../order";
 
 const NavBar = ({ user }) => {
   return (
